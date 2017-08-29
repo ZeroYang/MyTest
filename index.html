@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<meta charset="UTF-8">
+<head>
+<script src="jquery-3.2.1.min.js"></script>
+</head>
+<body>
+
+<h1>我的第一张网页</h1>
+
+<p id="demo">我的第一个段落</p>
+
+<input type="button" onclick="alert('Hello World!')" value="Click Me!">
+
+<form id="imgForm">
+添加你的数据：<input type="file" onchange="readFile(this)">
+	<br/>
+选择你的图片：<input type="file" >
+	<br/>
+	<button type="button" onclick="loadImg()">获取图片</button>
+</form>
+
+<div id="imgDiv">
+	<img id="imgContent">
+</div>
+
+<script>
+document.getElementById("demo").innerHTML="我的第一段 JavaScript";
+//document.getElementById("file").innerHTML="我的第一段 JavaScript";
+
+var content;
+
+function main()
+{
+
+}
+
+function loadImg(){  
+    //获取文件  
+    var file = $("#imgForm").find("input")[0].files[0];  
+  
+    //创建读取文件的对象  
+    var reader = new FileReader();  
+  
+    //创建文件读取相关的变量  
+    var imgFile;  
+  
+    //为文件读取成功设置事件  
+    reader.onload=function(e) {  
+        alert('文件读取完成');  
+        imgFile = e.target.result;  
+        console.log(imgFile);  
+        $("#imgContent").attr('src', imgFile);  
+    };
+  
+    //正式读取文件  
+    reader.readAsDataURL(file);  
+}  
+
+function readFile(filePath)
+{
+	console.log(filePath.value); 
+	var file = $("#imgForm").find("input")[0].files[0];  
+	console.log(file); 
+	//创建读取文件的对象  
+    var reader = new FileReader();
+	var data;  
+    reader.onload=function(e) {  
+        alert('文件读取完成');  
+        data = e.target.result;  
+        console.log(data);  
+
+    };
+
+    reader.readAsText(file);  
+    //reader.readAsDataURL(file);  
+
+    ie_readFile(filePath.value);
+}
+
+//读文件   
+function ie_readFile(filename){   
+    var fso = new ActiveXObject("Scripting.FileSystemObject");   
+    var f = fso.OpenTextFile(filename,1);   
+    var s = "";   
+    while (!f.AtEndOfStream)   
+        s += f.ReadLine()+"/n";   
+    f.Close();   
+    return s;   
+}   
+  
+//写文件   
+function ie_writeFile(filename,filecontent){   
+    var fso, f, s ;   
+    fso = new ActiveXObject("Scripting.FileSystemObject");      
+    f = fso.OpenTextFile(filename,8,true);   
+    f.WriteLine(filecontent);     
+    f.Close();   
+    alert('write ok');   
+}  
+
+function writeFile(filename, filecontent)
+{
+
+}
+
+function sortByDate()
+{
+	//按日期
+}
+
+function sortByLast()
+{
+	//按遗漏 最后次出现到现在的间隔排序
+}
+
+function Pairs()
+{
+	//组三对子排序
+}
+
+function zuXuan()
+{
+	//组选三、六
+}
+
+function zhiXuan()
+{
+    //直选
+}
+
+function addNewNumber()
+{
+//添加新号码
+}
+
+function save()
+{
+//保存数据
+}
+
+</script>
+
+</body>
+</html>
