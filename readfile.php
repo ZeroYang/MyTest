@@ -10,6 +10,7 @@ Welcome
 echo "js提交表单传的参数值为：" .$_REQUEST["parms"];
 
 $filepath = $_REQUEST["parms"];
+$filepath = "C:\wamp\www\MyTest\data\data.txt";
 
 // if ($_FILES["file"]["error"] > 0)
 // {
@@ -24,6 +25,29 @@ $filepath = $_REQUEST["parms"];
 // 	echo $_FILES["file"]["tmp_name"]. "<br>";
 // }
 
+	function readfile($filepath)
+	{
+		$lines=array();
+
+		$myfile = fopen($filepath, "r") or die("Unable to open file!");
+		// 输出单行直到 end-of-file
+		while(!feof($myfile)) {
+			echo fgets($myfile) . "<br>";
+		}
+		fclose($myfile);
+
+		return lines;
+	}
+
+	function writefile($filepath)
+	{
+		$myfile = fopen(filepath, "w") or die("Unable to open file!");
+		$txt = "Bill Gates\n";
+		fwrite($myfile, $txt);
+		$txt = "Steve Jobs\n";
+		fwrite($myfile, $txt);
+		fclose($myfile);
+	}
 
  class Test{
 	const LOG_PATH="C:\wamp\logs\php_error.log";
