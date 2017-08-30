@@ -5,12 +5,84 @@
 	<title></title>
 </head>
 
-Welcome
+Welcome </br>
 <?php 
-echo "js提交表单传的参数值为：" .$_REQUEST["parms"];
 
-$filepath = $_REQUEST["parms"];
+include "test.php";
+
 $filepath = "C:\wamp\www\MyTest\data\data.txt";
+
+// echo "js提交表单传的参数值为：" .$_REQUEST["parms"];
+//$filepath = $_REQUEST["parms"];
+
+if(!empty($_POST['submit']) && $_POST['submit'] == "提交")
+{
+	echo $_POST['submit'] . "<br>";
+	echo $_POST['qihao'] . "<br>";
+	echo $_POST['number'] . "<br>";
+
+	$ret = zhixuan2zuxuan($_POST['number']);
+	echo  "==" .$ret;
+}
+
+if(!empty($_POST['submit']) && $_POST['submit'] == "查询")
+{
+	echo $_POST['submit'] . "<br>";
+	echo $_POST['qihao'] . "<br>";
+	echo $_POST['number'] . "<br>";
+
+	$test=new Test();
+	$qihao = $_POST['qihao'];
+	$number = $_POST['number'];
+	$txt="";
+	$txt .= intval($qihao) ."\t" .$number . "\n";
+	// for ($i=0; $i < 100; $i++) { 
+	// 	$txt .= $i+intval($qihao) ."\t" .$number . "\n";
+	// }
+	//echo $txt;
+
+	$test->writeFile($filepath,$txt);
+}
+
+
+//排序
+
+//统计遗漏
+
+//直选转组选
+function zhixuan2zuxuan($num)
+{
+	$ret = "";
+
+	$bai = (int)(intval($num)/100);
+	$shi =(int)(intval($num)/10%10);
+	$ge = intval($num)%100%10;
+
+	$tmp;
+	if($bai > $shi)
+	{
+		$tmp = $bai;
+		$bai = $shi;
+		$shi = $tmp;
+	}
+	if($bai > $ge)
+	{
+		$tmp = $bai;
+		$shi = $ge;
+		$ge = $tmp;
+	}
+
+	if($shi > $ge)
+	{
+		$tmp = $shi;
+		$shi = $ge;
+		$ge = $tmp;
+	}
+
+	$ret = $bai."".$shi."".$ge;
+	return $ret;
+}
+
 
 // if ($_FILES["file"]["error"] > 0)
 // {
@@ -25,82 +97,9 @@ $filepath = "C:\wamp\www\MyTest\data\data.txt";
 // 	echo $_FILES["file"]["tmp_name"]. "<br>";
 // }
 
-	function readfile($filepath)
-	{
-		$lines=array();
 
-		$myfile = fopen($filepath, "r") or die("Unable to open file!");
-		// 输出单行直到 end-of-file
-		while(!feof($myfile)) {
-			echo fgets($myfile) . "<br>";
-		}
-		fclose($myfile);
 
-		return lines;
-	}
-
-	function writefile($filepath)
-	{
-		$myfile = fopen(filepath, "w") or die("Unable to open file!");
-		$txt = "Bill Gates\n";
-		fwrite($myfile, $txt);
-		$txt = "Steve Jobs\n";
-		fwrite($myfile, $txt);
-		fclose($myfile);
-	}
-
- class Test{
-	const LOG_PATH="C:\wamp\logs\php_error.log";
-
-	const PAGES=50;
-
-	function readLogs($filepath,$num=20)
-	{
-		$fp=fopen($filepath, "r");
-		$pos=-2;
-		$eof="";
-		$head=false;
-		$lines=array();
-
-		while ($num>0) {
-
-			while ($eof != "\n") {
-				if (fseek($fp, $pos, SEEK_END)==0) {
-					$eof=fgetc($fp);//逐字符读取
-					$pos--;
-				}else{
-					fseek($fp, 0, SEEK_SET);
-					$head=true;
-					break;
-				}
-			}
-			array_unshift($lines, fgets($fp)); //fgets() 逐行
-			if ($head) {
-				break;
-			}
-
-			$eof="";
-			$num--;
-		}
-		fclose($fp);
-		return array_reverse($lines);
-	}
-
-    public static function showApacheLogs($filepath,$num=20){
-        $test=new Test();
-        $result=$test->readLogs($filepath,$num);
-        $html="";
-        foreach($result as $line){
-            if(strpos($line,"error:")){
-                $line="<font color='red'>".$line."</font>";
-            }
-            $html.="<div class='line'>".$line."<div>";
-        }
-        echo $html;
-    }
-}
-
-Test::showApacheLogs($filepath,10);
+//Test::showApacheLogs($filepath,10);
 
  ?>
 <body>

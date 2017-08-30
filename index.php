@@ -33,9 +33,23 @@
 </form> -->
 
 <form id="FileForm" method="post" action="readfile.php">
-添加你的数据：<input type="file" onchange="readFilePath(this)">
+选取你的文件：<input type="file" onchange="readFilePath(this)">
 	<br/>
 	<button type="button" onclick="start()">开始</button>
+</form>
+
+<form  method="post" action="readfile.php">
+期号：<input type="text" name="qihao">
+号码：<input type="text" name="number">
+	<br/>
+	<input type="submit" name="submit" value="提交">
+</form>
+
+<form  method="post" action="readfile.php">
+期号：<input type="text" name="qihao">
+号码：<input type="text" name="number">
+	<br/>
+	<input type="submit" name="submit" value="查询">
 </form>
 
 <script>
